@@ -1,7 +1,10 @@
 *
-!app/
 !src/
+!src/*
+!app/
+!app/*
 !deps/
+!deps/*
 !.gitignore
 !.gitmodules
 !CMakeLists.txt
