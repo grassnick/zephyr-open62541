@@ -20,6 +20,35 @@ index 7bac77f69..aac893fe3 100644
 
 ```
 
+For debugging we can use the 4mb RAM; need to modify the linker file in zephyr -- this is 
+experimental so we dont want to push this to mainline zephyr.
+
+```
+---
+Index: soc/sensry/ganymed/sy1xx/common/linker.ld
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/soc/sensry/ganymed/sy1xx/common/linker.ld b/soc/sensry/ganymed/sy1xx/common/linker.ld
+--- a/soc/sensry/ganymed/sy1xx/common/linker.ld	(revision 599b67f7da25d4f4af66886a169f007e3ab866d4)
++++ b/soc/sensry/ganymed/sy1xx/common/linker.ld	(date 1779271775929)
+@@ -30,10 +30,10 @@
+
+## ROM AREA ##
+#define ROM_BASE        0x1C010100
+-#define ROM_SIZE        0x5Fa00
++#define ROM_SIZE        0x1FFF00
+
+## RAM AREA ##
+-#define RAM_BASE        0x1C070000
++#define RAM_BASE        0x1C210000
+#define RAM_SIZE        0x200000
+
+MEMORY
+```
+
+
 ## Build
 
 Tested with the latest west tooling and zephyr main branch at the time: `https://github.com/zephyrproject-rtos/zephyr/commit/3984c8987aaf1226fed99186ccd8571d6daf21ce`
