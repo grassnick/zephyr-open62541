@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.20.0)
 
-set(BOARD ganymed_sk/sy120_gbm)
+#set(BOARD ganymed_sk/sy120_gbm)
+set(BOARD ganymed_bob/sy120_gbm)
+
 set(EXTRA_ZEPHYR_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/deps/open62541/arch)
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
@@ -19,5 +21,8 @@ target_compile_options(app PRIVATE
 )
 target_link_options(app PRIVATE -Wl,--gc-sections -flto)
 
-target_sources(app PRIVATE app/main.cpp)
+target_sources(app PRIVATE
+        app/main.cpp
+        app/network.c
+)
 target_link_libraries(app PUBLIC open62541)

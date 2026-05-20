@@ -1,6 +1,10 @@
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>
 
+#include "zephyr/kernel.h"
+
+extern "C" void start_network();
+
 static char kLocale[]  = "en-US";
 static char kVarName[] = "foobar";
 
@@ -18,6 +22,13 @@ static void updateVariable(UA_Server *server, void * /*data*/) {
 }
 
 int main(void) {
+
+    start_network();
+
+    while (true) {
+        k_sleep(K_MSEC(1000));
+    }
+
     UA_Server *server = UA_Server_new();
     if (!server) {
         return EXIT_FAILURE;

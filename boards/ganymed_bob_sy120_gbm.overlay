@@ -1,0 +1,37 @@
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/pinctrl/sy1xx-pinctrl.h>
+
+/ {
+
+	log_uarts: log_uarts {
+		compatible = "zephyr,log-uart";
+		uarts = <&uart0>;
+		status = "okay";
+	};
+
+	chosen {
+		zephyr,shell,uart = &uart0;
+	};
+
+};
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+
+};
+
+&uart1 {
+	status = "disabled";
+};
+
+&uart2 {
+	status = "disabled";
+};
+
+
+&eth0 {
+	local-mac-address = [b2 25 aa 4e d5 5a];
+	/* zephyr,random-mac-address;*/
+};
