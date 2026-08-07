@@ -51,7 +51,7 @@ static void my_network_handler(struct net_mgmt_event_callback *cb,
         case NET_EVENT_IF_UP:
             LOG_INF("Interface is up; starting DHCPv4");
             dhcp_start_time = k_uptime_get_32();
-            net_dhcpv4_start(iface);
+            //net_dhcpv4_start(iface);
             break;
         case NET_EVENT_IF_DOWN: {
             char empty[] = "";
@@ -97,6 +97,7 @@ static void my_network_handler(struct net_mgmt_event_callback *cb,
         default:
             break;
     }
+
 }
 
 static void generate_local_mac(uint8_t mac[6])
@@ -160,7 +161,7 @@ void network_loop() {
         .s4_addr = {255, 255, 255, 0 }
     };
 
-    uint32_t retry_count = 30;
+    uint32_t retry_count = 1;
     while (1) {
         printk("waiting for DHCP IP\n");
         k_sleep(K_SECONDS(1));
