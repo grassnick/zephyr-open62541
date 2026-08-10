@@ -119,9 +119,15 @@ debug_mram()
 debug_sram()
 {
     echo "Debug [$1] at USoC"
-    BUILD_DIR=cmake-build-debug-zephyr-latest/zephyr
+    BUILD_DIR=${BUILD_DIR:-build/zephyr}
     APP_NAME=$1
-    image=${BUILD_DIR}/${APP_NAME}.elf
+
+    # accept either an explicit path to an .elf or an app name inside BUILD_DIR
+    case "$1" in
+        *.elf) image=$1 ;;
+        *) image=${BUILD_DIR}/${APP_NAME}.elf ;;
+    esac
+
     if [ -f "${image}" ]; then
         echo "${image} exists."
     else
