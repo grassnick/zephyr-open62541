@@ -132,35 +132,9 @@ diff --git a/soc/sensry/ganymed/sy1xx/common/linker.ld b/soc/sensry/ganymed/sy1x
 MEMORY
 ```
 
+There also seems to be a problem on the ethernet driver:
 
-## Build
-
-Tested with the latest west tooling and zephyr main branch at the time: `https://github.com/zephyrproject-rtos/zephyr/commit/3984c8987aaf1226fed99186ccd8571d6daf21ce`
-
-The following build command was used to build:
-
-``` bash
-west build -b ganymed_sk/sy120_gbm
-```
-
-## Deploy
-
-It is currently not possible to flash the build to ROM of the Ganymed Board.
-
-Only debugger builds are supported.
-These require a debugging bootloader installed on the target. Afterwards use the `loader.sh` script to load the image in the RAM.
-
-``` bash
-./loader.sh debug_sram zephyr
-```
-
-### Flash debug bootloader
-
-Use https://github.com/sensry-de/ganymed-pypi with the debug flashing mode to prepare the board with the debug bootloader.
-
-
-##
-
+``` patch
 diff --git a/drivers/ethernet/eth_sensry_sy1xx_mac.c b/drivers/ethernet/eth_sensry_sy1xx_mac.c
 index 8cc4d7f8318..417bc9b5af1 100644
 --- a/drivers/ethernet/eth_sensry_sy1xx_mac.c
@@ -189,20 +163,30 @@ index 8cc4d7f8318..417bc9b5af1 100644
  		/* message received, copy data */
  		memcpy(rx, data->dma_buffers->rx, bytes_transferred);
  		*len = bytes_transferred;
-diff --git a/soc/sensry/ganymed/sy1xx/common/linker.ld b/soc/sensry/ganymed/sy1xx/common/linker.ld
-index fdf4975ed51..5a6532338c7 100644
---- a/soc/sensry/ganymed/sy1xx/common/linker.ld
-+++ b/soc/sensry/ganymed/sy1xx/common/linker.ld
-@@ -30,10 +30,10 @@
- 
- ## ROM AREA ##
- #define ROM_BASE        0x1C010100
--#define ROM_SIZE        0x5Fa00
-+#define ROM_SIZE        0x1FFF00
- 
- ## RAM AREA ##
--#define RAM_BASE        0x1C070000
-+#define RAM_BASE        0x1C210000
- #define RAM_SIZE        0x200000
- 
- MEMORY
+```
+
+
+## Build
+
+Tested with the latest west tooling and zephyr main branch at the time: `https://github.com/zephyrproject-rtos/zephyr/commit/3984c8987aaf1226fed99186ccd8571d6daf21ce`
+
+The following build command was used to build:
+
+``` bash
+west build -b ganymed_sk/sy120_gbm
+```
+
+## Deploy
+
+It is currently not possible to flash the build to ROM of the Ganymed Board.
+
+Only debugger builds are supported.
+These require a debugging bootloader installed on the target. Afterwards use the `loader.sh` script to load the image in the RAM.
+
+``` bash
+./loader.sh debug_sram zephyr
+```
+
+### Flash debug bootloader
+
+Use https://github.com/sensry-de/ganymed-pypi with the debug flashing mode to prepare the board with the debug bootloader.
