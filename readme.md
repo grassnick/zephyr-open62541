@@ -69,3 +69,7 @@ These require a debugging bootloader installed on the target. Afterwards use the
 ``` bash
 ./loader.sh debug_sram zephyr
 ```
+
+### Flash debug bootloader
+
+Use https://github.com/sensry-de/ganymed-pypi with the debug flashing mode to prepare the board with the debug bootloader.
