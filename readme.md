@@ -58,3 +58,14 @@ The following build command was used to build:
 ``` bash
 west build -b ganymed_sk/sy120_gbm
 ```
+
+## Deploy
+
+It is currently not possible to flash the build to ROM of the Ganymed Board.
+
+Only debugger builds are supported.
+These require a debugging bootloader installed on the target. Afterwards use the `loader.sh` script to load the image in the RAM.
+
+``` bash
+./loader.sh debug_sram zephyr
+```
